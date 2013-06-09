@@ -3,6 +3,7 @@
 <head>
 <meta name="description" content="Uniform Map 是一個讓你可以從地圖去看學校制服的網站，想知道附近有什麼學校，或是制服的樣式，都可以透過這個網站去查看" />
 <title>Uniform Map - 制服地圖</title>
+<!-- http://weather.datamining.tw/uniform/ -->
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <style type="text/css">
     ul {
@@ -22,6 +23,28 @@
     }
 </style>
 <script type="text/javascript">
+    var locations = {};
+    locations["tainan"] = "台南";
+    locations["taichung"] = "台中";
+    locations["kaohsiung"] = "高雄";
+    locations["changhua"] = "彰化";
+    locations["taipei"] = "台北";
+    locations["taoyuan"] = "桃园";
+    locations["chayi"] = "嘉义";
+    locations["pingtung"] = "屏东";
+    locations["nantou"] = "南投";
+    locations["miaoli"] = "苗栗";
+    locations["newtaipei"] = "新北";
+    locations["yunlin"] = "云林";
+    locations["taitung"] = "台东";
+    locations["kinmen"] = "金门";
+    locations["penghu"] = "澎湖";
+    locations["matsu"] = "马祖";
+    locations["hualien"] = "花莲";
+    locations["yilan"] = "宜兰";
+    locations["hsinchu"] = "新竹";
+    locations["keelung"] = "基隆";
+
     function Uniform(ulId, tblId) {
         var uniformData = null;
         var ui = null;
@@ -33,6 +56,38 @@
         var totalPages = 0;
         var currentPage = -1;
         var that = this;
+
+        this.getData = function () { return uniformData; };
+
+        //rename filename with file information
+        this.rename = function () {
+            var commands = "";
+            if (!uniformData) return null;
+            for (var i = 0; i < uniformData.length; i++) {
+                if (uniformData[i].show == "0") continue;
+                var idx = uniformData[i].img.lastIndexOf('/');
+                if (idx < 0) continue;
+                var filename = uniformData[i].img.substr(idx + 1);
+
+                commands += 'mv "' + filename + '" "' + locations[uniformData[i].location] + '_' + uniformData[i].name + '.jpg"\r\n';
+            }
+
+            return commands;
+        };
+
+        //get image list
+        this.print = function () {
+            var opener = window.open();
+            var html = "<html><head><title>Print Image List</title></head><body>";
+
+            for (var i = 0; i < uniformData.length; i++) {
+                if (uniformData[i].show == "0") continue;
+                html += "<img width='200' src='" + uniformData[i].img + "' alt='No Pic' />";
+            }
+
+            html += "</body></html>";
+            opener.document.write(html);
+        };
 
         this.init = function () {
             ui = $(document.getElementById(ulId));
@@ -106,7 +161,7 @@
                     element[2].firstChild.src = "";
                 }
                 else {
-                    element[0].innerHTML = data.name + "，" + data.location;
+                    element[0].innerHTML = data.name + "，" + locations[data.location];
                     element[2].href = data.img;
                     element[2].firstChild.src = data.img;
                 }
