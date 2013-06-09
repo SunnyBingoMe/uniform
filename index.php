@@ -50,7 +50,7 @@ $aData = json_decode($json);
 				<div class="caption">
 					<h3><?php echo $data['name'] ?></h3>
 					<p>城市:<?php echo $data['location'] ?></p>
-					<p><a href="#" class="btn btn-primary">Action</a> <a href="#" class="btn">Action</a></p>
+					<!--p><a href="#" class="btn btn-primary">Action</a> <a href="#" class="btn">Action</a></p -->
 				</div>
 			</div>
 		</li>
