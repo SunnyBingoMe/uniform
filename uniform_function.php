@@ -1,0 +1,22 @@
+<?php 
+$locationList = array();
+$locationList["tainan"] = "台南";
+$locationList["taichung"] = "台中";
+$locationList["kaohsiung"] = "高雄";
+$locationList["changhua"] = "彰化";
+$locationList["taipei"] = "台北";
+$locationList["taoyuan"] = "桃园";
+$locationList["chayi"] = "嘉义";
+$locationList["pingtung"] = "屏东";
+$locationList["nantou"] = "南投";
+$locationList["miaoli"] = "苗栗";
+$locationList["newtaipei"] = "新北";
+$locationList["yunlin"] = "云林";
+$locationList["taitung"] = "台东";
+$locationList["kinmen"] = "金门";
+$locationList["penghu"] = "澎湖";
+$locationList["matsu"] = "马祖";
+$locationList["hualien"] = "花莲";
+$locationList["yilan"] = "宜兰";
+$locationList["hsinchu"] = "新竹";
+$locationList["keelung"] = "基隆";

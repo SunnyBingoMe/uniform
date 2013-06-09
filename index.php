@@ -33,6 +33,7 @@
 <body>
 <?php 
 require_once("sunny_function.php");
+require_once("uniform_function.php");
 $jsonurl = "http://weather.datamining.tw/uniform/school.json";
 $json = file_get_contents($jsonurl,0,null,null);
 $aData = json_decode($json);
@@ -46,10 +47,10 @@ $aData = json_decode($json);
 
 		<li class="span2">
 			<div class="thumbnail">
-				<img src="<?php echo $data['img']?>" width="300" alt="图片下载失败">
+				<img class="lazy" src="" data-original="<?php echo $data['img']?>" width="300" alt="图片下载失败">
 				<div class="caption">
 					<h3><?php echo $data['name'] ?></h3>
-					<p>城市:<?php echo $data['location'] ?></p>
+					<p>城市:<?php echo $locationList[$data['location']] ?></p>
 					<!--p><a href="#" class="btn btn-primary">Action</a> <a href="#" class="btn">Action</a></p -->
 				</div>
 			</div>
@@ -69,6 +70,14 @@ $aData = json_decode($json);
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 
+<script src="resource/js/jquery.lazyload.js" type="text/javascript"></script>
+	<script>
+		$(function() {
+			$("img").lazyload();
+		});
+	</script>
+	
+
 	<script src="resource/js/bootstrap-transition.js"></script>
 	<script src="resource/js/bootstrap-alert.js"></script>
 	<script src="resource/js/bootstrap-modal.js"></script>
@@ -85,7 +94,6 @@ $aData = json_decode($json);
 		<script src="resource/js/jquery-placeholder.min.js"></script>
 		<script>$('input, text, textarea').placeholder();</script>
 	<![endif]-->
-	
-	
-	<!-- script src="resource/js/holder.js"></script> -->
+
+	<script src="resource/js/holder.js"></script>
 	
