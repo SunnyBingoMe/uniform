@@ -45,9 +45,9 @@ $aData = json_decode($json);
 		$data = (array) $data;
 	?>
 
-		<li class="span2">
+		<li class="span3" style="margin:6px">
 			<div class="thumbnail">
-				<img class="lazy" src="" data-original="<?php echo $data['img']?>" width="300" alt="图片下载失败">
+				<img class="lazy" src="" data-original="<?php echo $data['img']?>" alt="图片下载失败">
 				<div class="caption">
 					<h3><?php echo $data['name'] ?></h3>
 					<p>城市:<?php echo $locationList[$data['location']] ?></p>

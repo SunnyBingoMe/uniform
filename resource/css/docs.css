@@ -559,7 +559,7 @@ h2 + .row {
   font-size: 13px;
   line-height: 18px;
 }
-.bootstrap-examples .thumbnail {
+.thumbnail {
   margin-bottom: 9px;
   background-color: #fff;
 }
@@ -1089,7 +1089,7 @@ form.bs-docs-example {
     margin: 0 auto 18px;
     text-align: center;
   }
-  .example-sites .thumbnail > img {
+  .thumbnail > img {
     max-width: 270px;
   }
 
