@@ -1,0 +1,185 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta name="description" content="Uniform Map 是一個讓你可以從地圖去看學校制服的網站，想知道附近有什麼學校，或是制服的樣式，都可以透過這個網站去查看" />
+<title>Uniform Map - 制服地圖</title>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<style type="text/css">
+    ul {
+        width: 100%;
+        padding: 0;
+        display: none;
+        
+    }
+
+    li {
+        width: 200px;
+        display: inline-block;
+    }
+
+    img {
+        border: 0;
+    }
+</style>
+<script type="text/javascript">
+    function Uniform(ulId, tblId) {
+        var uniformData = null;
+        var ui = null;
+        var btnPrev = null;
+        var btnNext = null;
+        var txtPage = null;
+
+        var picPerPage = 8;
+        var totalPages = 0;
+        var currentPage = -1;
+        var that = this;
+
+        this.init = function () {
+            ui = $(document.getElementById(ulId));
+            if (ui.length != 1) throw new Error("UL error.");
+            ui = ui.children();
+            if (ui.length != picPerPage) throw new Error("LI error.");
+
+            var table = document.getElementById(tblId);
+            if (table == null) throw new Error("Table error.");
+            txtPage = $(table).find("a");
+            if (txtPage.length != 2) throw new Error("Button error.");
+            btnPrev = txtPage[0];
+            btnNext = txtPage[1];
+
+            //Prev and Next button click
+            txtPage.click(function () {
+                if (this.href == "") return false;
+                var idx = this.href.indexOf('#');
+                if (idx < 0) return false;
+                var page = parseInt(this.href.substr(idx + 1));
+                if (isNaN(page)) return false;
+                show(page);
+            });
+
+            txtPage = $(table).find("input");
+            if (txtPage.length != 1) throw new Error("Textbox error.");
+
+            //page number text box
+            txtPage = txtPage[0];
+            txtPage.onkeydown = function () {
+                if (event.keyCode != 13) return;
+                var page = parseInt(txtPage.value);
+                if (isNaN(page)) return;
+                show(page - 1);
+            };
+
+            if (uniformData != null) show(0);
+        };
+
+        var fetchData = function () {
+            $.ajax({
+                url: "UniformMap.json",
+                dataType: "json",
+                type: "GET",
+                ajaxStart: function () { },
+                error: function (xhr) {
+                    alert('Ajax request 發生錯誤');
+                },
+                success: function (json) {
+                    var NumOfData = json.length;
+                    if (NumOfData == 0) throw new Error("Ajax Data Error.");
+                    uniformData = json;
+                    totalPages = Math.ceil(NumOfData / picPerPage);
+                    if (ui != null) show(0);
+                }
+            });
+        };
+
+        var show = function (page) {
+            if (currentPage == page) return false;
+            if (page < 0 || page >= totalPages) return false;
+
+            var start = page * picPerPage;
+            for (var i = 0; i < picPerPage; i++) {
+                var element = $(ui[i]).children();
+                var data = uniformData[start + i];
+
+                if (!data) {
+                    element[0].innerHTML = "No Data";
+                    element[2].href = "#";
+                    element[2].firstChild.src = "";
+                }
+                else {
+                    element[0].innerHTML = data.name + "，" + data.location;
+                    element[2].href = data.img;
+                    element[2].firstChild.src = data.img;
+                }
+                //set height when there is no pic
+                //if (uniformData[start + i].show == "0") element[2].height = 300;
+                //else element[2].height = undefined;
+            }
+
+            currentPage = page;
+            txtPage.value = page + 1 + " / " + totalPages;
+            if (page + 1 < totalPages) btnNext.href = "#" + (page + 1);
+            else btnNext.href = "#";
+            if (page > 0) btnPrev.href = "#" + (page - 1);
+            else btnPrev.href = "#";
+
+            ui.parent().show();
+        };
+
+        fetchData();
+    }
+
+    var uniform = new Uniform("list", "control");
+</script>
+</head>
+<body onload="uniform.init();">
+    <ul id='list'>
+        <li>
+            <span>123</span>
+            <br />
+            <a title="Click to view large picture" target="_blank"><img src="" alt="No Pic" width="200" /></a>
+        </li>
+        <li>
+            <span>123</span>
+            <br />
+            <a title="Click to view large picture" target="_blank"><img src="" alt="No Pic" width="200" /></a>
+        </li>
+        <li>
+            <span>123</span>
+            <br />
+            <a title="Click to view large picture" target="_blank"><img src="" alt="No Pic" width="200" /></a>
+        </li>
+        <li>
+            <span>123</span>
+            <br />
+            <a title="Click to view large picture" target="_blank"><img src="" alt="No Pic" width="200" /></a>
+        </li>
+        <li>
+            <span>123</span>
+            <br />
+            <a title="Click to view large picture" target="_blank"><img src="" alt="No Pic" width="200" /></a>
+        </li>
+        <li>
+            <span>123</span>
+            <br />
+            <a title="Click to view large picture" target="_blank"><img src="" alt="No Pic" width="200" /></a>
+        </li>
+        <li>
+            <span>123</span>
+            <br />
+            <a title="Click to view large picture" target="_blank"><img src="" alt="No Pic" width="200" /></a>
+        </li>
+        <li>
+            <span>123</span>
+            <br />
+            <a title="Click to view large picture" target="_blank"><img src="" alt="No Pic" width="200" /></a>
+        </li>
+	</ul>
+    <table width="100%" id="control">
+        <tr>
+            <td align="left"><a>&lt;&lt;Prev</a></td>
+            <td align="center"><input name="page" type="text" value="" size="5" title="Input page number and press Enter" /></td>
+            <td align="right"><a>Next&gt;&gt;</a></td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,100 @@
+@import "../tbless/less/breadcrumbs.less";
+//
+// Breadcrumbs
+// --------------------------------------------------
+
+
+.breadcrumb {
+  padding: 8px 15px;
+  margin: 0 0 @baseLineHeight;
+  list-style: none;
+  background-color: #f5f5f5;
+  .border-radius(@baseBorderRadius);
+  > li {
+    display: inline-block;
+    .ie7-inline-block();
+    text-shadow: 0 1px 0 @white;
+    > .divider {
+      padding: 0 5px;
+      color: #ccc;
+    }
+  }
+  > .active {
+    color: @grayLight;
+  }
+}
+
+
+//
+// derived nav-process
+// --------------------------------------------------
+@fontsizePx: 18px;
+
+.nav-process {
+  margin: 0 (@mainContentRowMargin) @baseLineHeight (-@mainContentRowMargin);
+  background-color: @grayLighterLighter;
+  /*.border-bottom-radius(@baseBorderRadius);*/
+  border-bottom: @grayLighter solid 1px;
+
+  > * {
+    padding: 20px 35px;
+    margin: 0;
+    display: inline-block;
+  }
+
+  > .nav-process-subject {
+    border-right: @grayLighter solid 1px;
+  }
+
+  > ol {
+
+    > li {
+      list-style: none;
+      display: inline-block;
+      .ie7-inline-block();
+      text-shadow: 0 1px 0 @white;
+      color: @grayLight;
+      font-weight: bold;
+
+      &.divider {
+        margin: 0px 0px;
+        padding: 0 (20 - 0.6*@fontsizePx) 0 20px;
+        color: #ccc;
+
+        > img {
+          margin: 0px 0px;
+          padding: 0;
+        }
+      }
+
+      > .nav-process-number { //number-circle
+        display: inline-block;
+        .border-radius(@fontsizePx);
+        behavior: url(PIE.htc);
+
+        width: 1.125 * @fontsizePx;
+        height: 1.125 * @fontsizePx;
+        padding: 0.25 * @fontsizePx;
+        margin: 0 (0.3 * @fontsizePx);
+
+        font-weight: bold;
+        font-size: @fontsizePx;
+        font-family: @sansFontFamily;
+
+        color: @white;
+        text-align: center;
+        background: @grayLight;
+        //border: 1px solid @gray;
+      }
+    }
+
+    > .active {
+      color: black;
+      > .nav-process-number {
+        background: @xinmadeColor;
+      }
+    }
+
+  }
+}
+
